@@ -58,19 +58,22 @@ public class TemperatureConverter {
                 System.out.println("Invalid input: please enter a numeric temperature value.");
             } else {
                 double temperature = Double.parseDouble(tempInput);
+                boolean unitAccepted = false;
 
-                System.out.print("Enter unit (C or F): ");
-                String unit = scan.nextLine().trim().toUpperCase();
+                while (!unitAccepted && running) {
+                    System.out.print("Enter unit (C or F): ");
+                    String unit = scan.nextLine().trim().toUpperCase();
 
-                if (!unit.equals("C") && !unit.equals("F")) {
-                    System.out.println("Invalid unit: please enter C (Celsius) or F (Fahrenheit).");
-                } else {
-                    double converted = convertTemperature(temperature, unit);
-                    String toUnit = unit.equals("C") ? "F" : "C";
-
-                    System.out.printf("%.2f%s%s is equal to %.2f%s%s%n",
-                            temperature, degree, unit,
-                            converted, degree, toUnit);
+                    if (!unit.equals("C") && !unit.equals("F")) {
+                        System.out.println("Invalid unit: please enter C (Celsius) or F (Fahrenheit).");
+                    } else {
+                        double converted = convertTemperature(temperature, unit);
+                        String toUnit = unit.equals("C") ? "F" : "C";
+                        System.out.printf("%.2f%s%s is equal to %.2f%s%s%n",
+                                temperature, degree, unit,
+                                converted, degree, toUnit);
+                        unitAccepted = true;
+                    }
                 }
             }
         }

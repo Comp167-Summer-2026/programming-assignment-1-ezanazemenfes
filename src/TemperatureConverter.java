@@ -2,15 +2,13 @@ import java.util.Scanner;
 
 public class TemperatureConverter {
 
-
     public static double convertTemperature(double temperature, String unit) {
         if (unit.equalsIgnoreCase("C")) {
-            return (temperature * 9.0 / 5.0) + 32.0;   // Celsius → Fahrenheit
+            return (temperature * 9.0 / 5.0) + 32.0;
         } else {
-            return (temperature - 32.0) * 5.0 / 9.0;   // Fahrenheit → Celsius
+            return (temperature - 32.0) * 5.0 / 9.0;
         }
     }
-
 
     private static boolean isValidNumber(String s) {
         if (s == null || s.length() == 0) {
@@ -20,10 +18,9 @@ public class TemperatureConverter {
         int start = 0;
         boolean hasDecimal = false;
 
-        // Allow an optional leading minus sign
         if (s.charAt(0) == '-') {
             if (s.length() == 1) {
-                return false; // bare "-" is not a number
+                return false;
             }
             start = 1;
         }
@@ -34,7 +31,7 @@ public class TemperatureConverter {
             char c = s.charAt(i);
             if (c == '.') {
                 if (hasDecimal) {
-                    validSoFar = false; // second decimal point
+                    validSoFar = false;
                 } else {
                     hasDecimal = true;
                 }
@@ -48,10 +45,10 @@ public class TemperatureConverter {
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
+        char degree = '\u00B0';
         boolean running = true;
 
         while (running) {
-            // ── Step 1: ask for temperature or "stop" ──────────────────────────
             System.out.print("Enter a temperature (or type 'stop' to quit): ");
             String tempInput = scan.nextLine().trim();
 
@@ -62,7 +59,6 @@ public class TemperatureConverter {
             } else {
                 double temperature = Double.parseDouble(tempInput);
 
-                // ── Step 2: ask for unit ───────────────────────────────────────
                 System.out.print("Enter unit (C or F): ");
                 String unit = scan.nextLine().trim().toUpperCase();
 
@@ -70,11 +66,11 @@ public class TemperatureConverter {
                     System.out.println("Invalid unit: please enter C (Celsius) or F (Fahrenheit).");
                 } else {
                     double converted = convertTemperature(temperature, unit);
-                    String fromUnit = unit;
-                    String toUnit   = unit.equals("C") ? "F" : "C";
+                    String toUnit = unit.equals("C") ? "F" : "C";
 
-                    System.out.printf("%.2f°%s is equal to %.2f°%s%n",
-                            temperature, fromUnit, converted, toUnit);
+                    System.out.printf("%.2f%s%s is equal to %.2f%s%s%n",
+                            temperature, degree, unit,
+                            converted, degree, toUnit);
                 }
             }
         }
